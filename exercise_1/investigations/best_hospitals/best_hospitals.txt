@@ -1,0 +1,35 @@
+What Hospitals are models of high-quality care? That is, which hospitals have the most consistently high 
+scores for a variety of procedures
+
+
+There are two potential approaches to determining the best hospital from this database. 
+
+1). Look at patient survey scores. 
+2). Look at Effective Care scores and Readmissions score. This is the chosen approach.
+
+Patient surveys can provide a good view of the hospital and its environment, the interaction of the 
+nurses and doctors, staff responsiveness, and other non-medical issues. 
+
+However, Care scores and Re-admissions scores are a true indication of the medical care provided 
+by the hospital. The medical care provided is the true measure of a hopital and its staff.  Hence, 
+in this work, a composite metric representing the scores of the Effectve Care and the Readmissions 
+is used to determine the best hospital. 
+
+
+The Effective Care score and the Readmissions score are added to create a composite measure and 
+the top 10 hospitals are identified. The results show that
+
+	> 450348	FALLS COMMUNITY HOSPITAL AND CLINIC	251.283
+    	> 400079	HOSP COMUNITARIO BUEN SAMARITANO	184.1
+    	> 451330	MEDINA REGIONAL HOSPITAL		151.257
+    	> 310002	NEWARK BETH ISRAEL MEDICAL CENTER	148.615
+    	> 400032	HOSPITAL HERMANOS MELENDEZ INC		145.532
+    	> 05131		8REDWOOD MEMORIAL HOSPITAL		144.483
+    	> 261317	MERCY HOSPITAL CASSVILLE		144.1
+    	> 331316	COMMUNITY MEMORIAL HOSPITAL, INC	141.479
+    	> 400013	HOSPITAL MENONITA DE CAYEY		140.675
+    	> 140300	PROVIDENT HOSPITAL OF CHICAGO		139.966
+
+
+are the 10 best based upon the composite of Effective Care and Readmissions scores.
+

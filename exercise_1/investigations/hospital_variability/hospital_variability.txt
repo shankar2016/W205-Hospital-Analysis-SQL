@@ -1,0 +1,23 @@
+3). Which procedures have the greatest variability between hospitals?
+
+
+Variability is computed by looking at variance of scores in effective_care`. All 
+non numeric values were eliminated from the computation of variance.
+
+Look at procedural variability can only be done by looking at effectivce care and
+so that appraoch is taken.
+
+The following procesdures have the greatest variability between hospitals. 
+The codes are hard to decode but can be identified by qualified medical staff.
+
+LUTHERAN MEDICAL CENTER ED_1b   ED1     52441.0
+LUTHERAN MEDICAL CENTER ED_2b   ED2     30976.0
+PROVIDENCE HOSPITAL     ED_1b   ED1     29412.25
+GRADY MEMORIAL HOSPITAL ED_1b   ED1     28313.55555555555
+COMMUNITY MEDICAL CENTER        ED_1b   ED1     22500.0
+GRADY MEMORIAL HOSPITAL OP_18b  OP 18   22128.22222222222
+HIGHLAND HOSPITAL       ED_1b   ED1     21756.25
+ST MARY MEDICAL CENTER  ED_1b   ED1     17668.5
+SAINT FRANCIS MEDICAL CENTER    ED_1b   ED1     14140.666666666666
+NEWTON MEDICAL CENTER   ED_1b   ED1     13514.888888888889
+

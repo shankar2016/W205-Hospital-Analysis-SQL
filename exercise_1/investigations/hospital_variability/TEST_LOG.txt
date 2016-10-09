@@ -1,0 +1,93 @@
+    > 
+    > 
+    > show tables;
+OK
+effective_care_parquet
+effective_care_schema
+effective_care_score
+hospitals_parquet
+hospitals_schema
+measures_parquet
+measures_schema
+overall_hospital_score
+readmissions_parquet
+readmissions_schema
+readmissions_score
+surveys_responses_parquet
+surveys_responses_schema
+Time taken: 0.009 seconds, Fetched: 13 row(s)
+hive> -- Look at variability in medical procedures across hospitals by looking at scores in effective_care
+    > -- table. 
+    > DROP TABLE IF EXISTS hospital_variability;
+OK
+Time taken: 0.006 seconds
+hive> CREATE TABLE hospital_variability AS
+    > SELECT Name, Measure_ID, Measure_Name, variance(score) AS Measure_Variance
+    > FROM  effective_care_parquet WHERE score IS NOT NULL  AND sample NOT LIKE "Not Available" and sample NOT LIKE " "
+    > AND score NOT LIKE "Very High" AND Score NOT LIKE "High" AND Score Not LIKE "Medium" and Score NOT LIKE "Low"
+    > GROUP BY Name,  Measure_ID, Measure_Name;
+Query ID = w205_20161009164949_91326c5e-346d-444c-b2da-65241ecd2748
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0239, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0239/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0239
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 16:49:38,617 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:49:48,070 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 7.17 sec
+2016-10-09 16:49:56,513 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 13.06 sec
+MapReduce Total cumulative CPU time: 13 seconds 60 msec
+Ended Job = job_1475607266406_0239
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/hospital_variability
+Table default.hospital_variability stats: [numFiles=1, numRows=123000, totalSize=10393596, rawDataSize=10270596]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 13.06 sec   HDFS Read: 56104495 HDFS Write: 10393690 SUCCESS
+Total MapReduce CPU Time Spent: 13 seconds 60 msec
+OK
+Time taken: 26.907 seconds
+hive> 
+    > 
+    > -- Look at the top 10 with greatest variability
+    > SELECT * FROM hospital_variability
+    > ORDER BY Measure_variance DESC LIMIT 10;
+Query ID = w205_20161009165050_9e853f6d-32b9-4ac8-853d-cded9b9301a0
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0240, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0240/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0240
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 16:50:50,184 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:50:58,607 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.98 sec
+2016-10-09 16:51:05,019 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.87 sec
+MapReduce Total cumulative CPU time: 6 seconds 870 msec
+Ended Job = job_1475607266406_0240
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.87 sec   HDFS Read: 10400240 HDFS Write: 461 SUCCESS
+Total MapReduce CPU Time Spent: 6 seconds 870 msec
+OK
+LUTHERAN MEDICAL CENTER	ED_1b	ED1	52441.0
+LUTHERAN MEDICAL CENTER	ED_2b	ED2	30976.0
+PROVIDENCE HOSPITAL	ED_1b	ED1	29412.25
+GRADY MEMORIAL HOSPITAL	ED_1b	ED1	28313.55555555556
+COMMUNITY MEDICAL CENTER	ED_1b	ED1	22500.0
+GRADY MEMORIAL HOSPITAL	OP_18b	OP 18	22128.222222222223
+HIGHLAND HOSPITAL	ED_1b	ED1	21756.25
+ST MARY MEDICAL CENTER	ED_1b	ED1	17668.5
+SAINT FRANCIS MEDICAL CENTER	ED_1b	ED1	14140.666666666666
+NEWTON MEDICAL CENTER	ED_1b	ED1	13514.888888888889
+Time taken: 23.769 seconds, Fetched: 10 row(s)
+hive> 
+

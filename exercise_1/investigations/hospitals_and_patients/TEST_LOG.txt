@@ -1,0 +1,298 @@
+    > DROP TABLE IF EXISTS survey_composite;
+OK
+Time taken: 0.095 seconds
+hive> CREATE TABLE IF NOT EXISTS survey_composite AS
+    > SELECT Provider_ID, Name,
+    >         ((regexp_extract(Metric3, '^[0-9]+', 0)+
+    >         regexp_extract(Metric6, '^[0-9]+', 0)+
+    >         regexp_extract(Metric9, '^[0-9]+', 0)+
+    >         regexp_extract(Metric12, '^[0-9]+', 0)+
+    >         regexp_extract(Metric15, '^[0-9]+', 0)+
+    >         regexp_extract(Metric18, '^[0-9]+', 0)+
+    >         regexp_extract(Metric21, '^[0-9]+', 0)+
+    >         regexp_extract(Metric24, '^[0-9]+', 0))/80 +
+    >         regexp_extract(HCAHPS_Consistency_Score, '^[0-9]+', 0)) as survey_score
+    > FROM surveys_responses_parquet
+    > ORDER BY survey_score DESC;
+Query ID = w205_20161009173535_9179379c-5e26-4cbe-b8bf-5f9b7b7053c0
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0251, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0251/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0251
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 17:35:50,857 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 17:35:58,445 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.85 sec
+2016-10-09 17:36:04,782 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 5.16 sec
+MapReduce Total cumulative CPU time: 5 seconds 160 msec
+Ended Job = job_1475607266406_0251
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/survey_composite
+Table default.survey_composite stats: [numFiles=1, numRows=3074, totalSize=133534, rawDataSize=130460]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 5.16 sec   HDFS Read: 1155480 HDFS Write: 133620 SUCCESS
+Total MapReduce CPU Time Spent: 5 seconds 160 msec
+OK
+Time taken: 22.792 seconds
+hive> select count(*) from survey_composite;
+Query ID = w205_20161009173636_31d141e5-4a84-40fd-9776-b00b07c2f4e9
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0252, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0252/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0252
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 17:37:03,294 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 17:37:08,655 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.54 sec
+2016-10-09 17:37:16,026 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.41 sec
+MapReduce Total cumulative CPU time: 3 seconds 410 msec
+Ended Job = job_1475607266406_0252
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.41 sec   HDFS Read: 140164 HDFS Write: 5 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 410 msec
+OK
+3074
+Time taken: 21.563 seconds, Fetched: 1 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > -- Bring in the scores from the effective care table
+    > DROP TABLE IF EXISTS score_data;
+OK
+Time taken: 0.062 seconds
+hive> 
+    > CREATE TABLE IF NOT EXISTS score_data AS
+    > SELECT Provider_ID, AVG(Score) AS eff_score FROM effective_care_parquet
+    > GROUP BY Provider_ID
+    > ORDER BY eff_score DESC;
+Query ID = w205_20161009173737_9577ee85-25b0-409e-9c20-64b77e0e9577
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0253, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0253/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0253
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 17:37:45,069 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 17:37:52,601 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.88 sec
+2016-10-09 17:37:59,971 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.29 sec
+MapReduce Total cumulative CPU time: 6 seconds 290 msec
+Ended Job = job_1475607266406_0253
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0254, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0254/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0254
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2016-10-09 17:38:08,924 Stage-2 map = 0%,  reduce = 0%
+2016-10-09 17:38:15,479 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 2.07 sec
+2016-10-09 17:38:22,821 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 4.45 sec
+MapReduce Total cumulative CPU time: 4 seconds 450 msec
+Ended Job = job_1475607266406_0254
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/score_data
+Table default.score_data stats: [numFiles=1, numRows=4808, totalSize=98293, rawDataSize=93485]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.29 sec   HDFS Read: 56101103 HDFS Write: 153228 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 4.45 sec   HDFS Read: 157359 HDFS Write: 98372 SUCCESS
+Total MapReduce CPU Time Spent: 10 seconds 740 msec
+OK
+Time taken: 46.55 seconds
+hive> 
+    > select * from score_data LIMIT 20;
+OK
+450348	235.58333333333334
+051335	175.33333333333334
+400079	167.25
+451330	136.0
+310002	134.81578947368422
+051318	130.33333333333334
+400032	130.21052631578948
+261317	128.0
+331316	127.66666666666667
+511313	125.33333333333333
+400013	125.25
+490144	124.0
+140300	123.66666666666667
+330202	123.1951219512195
+341311	122.8
+210002	121.43333333333334
+051304	121.16666666666667
+450289	121.15384615384616
+341324	119.83333333333333
+330182	119.29729729729729
+Time taken: 0.035 seconds, Fetched: 20 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > -- Summarize the survey data from the survey_composite to just get the
+    > -- needed fields of Provider_ID and Overall Survey score
+    > DROP TABLE IF EXISTS survey_data;
+OK
+Time taken: 0.068 seconds
+hive> 
+    > CREATE TABLE IF NOT EXISTS survey_data AS
+    > SELECT Provider_ID, AVG(survey_score) AS sur_score FROM survey_composite
+    > GROUP BY Provider_ID
+    > ORDER BY sur_score DESC;
+Query ID = w205_20161009173939_63f70c2d-f471-4e80-8b02-71c16dfca03e
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0255, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0255/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0255
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2016-10-09 17:39:17,800 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 17:39:24,106 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.12 sec
+2016-10-09 17:39:31,460 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 4.43 sec
+MapReduce Total cumulative CPU time: 4 seconds 430 msec
+Ended Job = job_1475607266406_0255
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0256, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0256/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0256
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2016-10-09 17:39:39,060 Stage-2 map = 0%,  reduce = 0%
+2016-10-09 17:39:45,379 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 2.07 sec
+2016-10-09 17:39:52,738 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 4.24 sec
+MapReduce Total cumulative CPU time: 4 seconds 240 msec
+Ended Job = job_1475607266406_0256
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/survey_data
+Table default.survey_data stats: [numFiles=1, numRows=3074, totalSize=43034, rawDataSize=39960]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 4.43 sec   HDFS Read: 140129 HDFS Write: 99168 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 4.24 sec   HDFS Read: 103300 HDFS Write: 43114 SUCCESS
+Total MapReduce CPU Time Spent: 8 seconds 670 msec
+OK
+Time taken: 43.878 seconds
+hive> select * from survey_composite LIMIT 40;
+OK
+390324	PHYSICIAN'S CARE SURGICAL HOSPITAL	21.0
+010045	FAYETTE MEDICAL CENTER	21.0
+110200	NORTHSIDE MEDICAL CENTER	21.0
+360352	SURGICAL HOSPITAL AT SOUTHWOODS	21.0
+100313	SACRED HEART HOSPITAL ON THE GULF	21.0
+280131	MIDWEST SURGICAL HOSPITAL LLC	21.0
+190263	HEART HOSPITAL OF LAFAYETTE	21.0
+190261	OUACHITA COMMUNITY HOSPITAL	21.0
+190259	LAFAYETTE SURGICAL SPECIALTY HOSPITAL	21.0
+190241	PHYSICIANS MEDICAL CENTER	21.0
+180149	WESTLAKE REGIONAL HOSPITAL	21.0
+390316	SURGICAL INSTITUTE OF READING	21.0
+170190	MANHATTAN SURGICAL HOSPITAL LLC	21.0
+450834	PHYSICIANS CENTRE,THE	21.0
+520194	ORTHOPAEDIC HOSPITAL OF WISCONSIN	21.0
+390323	ADVANCED SURGICAL HOSPITAL	21.0
+450875	QUAIL CREEK SURGICAL HOSPITAL	21.0
+190267	FAIRWAY MEDICAL CENTER	21.0
+040152	PHYSICIANS' SPECIALTY HOSPITAL	21.0
+450422	BAYLOR MEDICAL CENTER AT UPTOWN	21.0
+430091	BLACK HILLS SURGICAL HOSPITAL LLP	21.0
+430092	DAKOTA PLAINS SURGICAL CENTER LLP	21.0
+670049	NORTH CENTRAL SURGICAL CENTER LLP	21.0
+520205	MIDWEST ORTHOPEDIC SPECIALTY HOSPITAL	20.9875
+450373	EAST TEXAS MEDICAL CENTER MOUNT VERNON	20.9875
+450856	SOUTH TEXAS SPINE AND SURGICAL HOSPITAL	20.9875
+450884	EAST TEXAS MEDICAL CENTER - GILMER	20.9875
+450888	TEXAS HEALTH HARRIS METHODIST HOSPITAL SOUTHLAKE	20.9875
+670067	BAYLOR ORTHOPEDIC AND SPINE HOSPITAL AT ARLINGTON	20.9875
+280129	NEBRASKA ORTHOPAEDIC HOSPITAL	20.9875
+050697	PATIENTS' HOSPITAL OF REDDING	20.9875
+440218	SAINT THOMAS HOSPITAL FOR SPECIALTY SURGERY	20.9875
+370206	OKLAHOMA SPINE HOSPITAL	20.9875
+140145	ST JOSEPHS HOSPITAL	20.9875
+370212	OKLAHOMA CENTER FOR ORTHOPAEDIC & MULTI-SP	20.975
+370215	OKLAHOMA HEART HOSPITAL	20.975
+170198	SUMMIT SURGICAL, LLC	20.975
+340049	NORTH CAROLINA SPECIALTY HOSPITAL	20.975
+190303	CYPRESS POINTE SURGICAL HOSPITAL	20.975
+420102	GHS PATEWOOD MEMORIAL HOSPITAL	20.975
+Time taken: 0.037 seconds, Fetched: 40 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > SELECT corr(score_data.eff_score, survey_data.sur_score) FROM score_data, survey_data
+    > WHERE score_data.eff_score > 0  AND survey_data.sur_score > 0 AND score_data.eff_score IS NOT NULL AND survey_data.sur_score IS NOT NULL;
+Warning: Map Join MAPJOIN[16][bigTable=?] in task 'Stage-2:MAPRED' is a cross product
+Query ID = w205_20161009174141_65a116d2-e908-4592-b63b-0a500fe97fea
+Total jobs = 1
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+Execution log at: /tmp/w205/w205_20161009174141_65a116d2-e908-4592-b63b-0a500fe97fea.log
+2016-10-09 05:41:09	Starting to launch local task to process map join;	maximum memory = 932184064
+2016-10-09 05:41:11	Dump the side-table for tag: 1 with group count: 1 into file: file:/tmp/w205/18808e3b-6e34-4ad8-b071-245be2a158c6/hive_2016-10-09_17-41-03_823_7060029596906254997-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile41--.hashtable
+2016-10-09 05:41:11	Uploaded 1 File to: file:/tmp/w205/18808e3b-6e34-4ad8-b071-245be2a158c6/hive_2016-10-09_17-41-03_823_7060029596906254997-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile41--.hashtable (40011 bytes)
+2016-10-09 05:41:11	End of local task; Time Taken: 1.7 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0257, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0257/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0257
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2016-10-09 17:41:18,982 Stage-2 map = 0%,  reduce = 0%
+2016-10-09 17:41:29,442 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 6.3 sec
+2016-10-09 17:41:36,837 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 8.29 sec
+MapReduce Total cumulative CPU time: 8 seconds 290 msec
+Ended Job = job_1475607266406_0257
+MapReduce Jobs Launched: 
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 8.29 sec   HDFS Read: 109327 HDFS Write: 22 SUCCESS
+Total MapReduce CPU Time Spent: 8 seconds 290 msec
+OK
+3.881793681525911E-13
+Time taken: 34.07 seconds, Fetched: 1 row(s)
+hive> 
+
