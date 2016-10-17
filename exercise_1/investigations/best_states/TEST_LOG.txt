@@ -1,0 +1,143 @@
+
+
+    > 
+    > show tables
+    > ;
+OK
+effective_care_parquet
+effective_care_schema
+effective_care_score
+hospitals_parquet
+hospitals_schema
+measures_parquet
+measures_schema
+overall_hospital_score
+readmissions_parquet
+readmissions_schema
+readmissions_score
+surveys_responses_parquet
+surveys_responses_schema
+Time taken: 0.008 seconds, Fetched: 13 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > -- Building on the same theme as with best hospitals, determine the best state by 
+    > -- looking at the effective care scores in the state
+    > SELECT hospitals_parquet.State, AVG(effective_care_parquet.Score) AS a_score
+    > FROM hospitals_parquet JOIN effective_care_parquet
+    > ON (hospitals_parquet.Provider_ID= effective_care_parquet.Provider_ID)
+    > WHERE effective_care_parquet.Score IS NOT NULL
+    > GROUP BY hospitals_parquet.State
+    > ORDER BY a_score DESC
+    > LIMIT 55;
+Query ID = w205_20161009164242_515e67f0-67f3-4ac3-a070-5e7df0e68495
+Total jobs = 2
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+Execution log at: /tmp/w205/w205_20161009164242_515e67f0-67f3-4ac3-a070-5e7df0e68495.log
+2016-10-09 04:42:31	Starting to launch local task to process map join;	maximum memory = 932184064
+2016-10-09 04:42:33	Dump the side-table for tag: 0 with group count: 4824 into file: file:/tmp/w205/18808e3b-6e34-4ad8-b071-245be2a158c6/hive_2016-10-09_16-42-25_986_6363780873787188663-1/-local-10005/HashTable-Stage-2/MapJoin-mapfile10--.hashtable
+2016-10-09 04:42:33	Uploaded 1 File to: file:/tmp/w205/18808e3b-6e34-4ad8-b071-245be2a158c6/hive_2016-10-09_16-42-25_986_6363780873787188663-1/-local-10005/HashTable-Stage-2/MapJoin-mapfile10--.hashtable (135990 bytes)
+2016-10-09 04:42:33	End of local task; Time Taken: 1.929 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0237, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0237/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0237
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2016-10-09 16:42:41,907 Stage-2 map = 0%,  reduce = 0%
+2016-10-09 16:42:50,375 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 5.36 sec
+2016-10-09 16:42:56,721 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 7.14 sec
+MapReduce Total cumulative CPU time: 7 seconds 140 msec
+Ended Job = job_1475607266406_0237
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1475607266406_0238, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0238/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0238
+Hadoop job information for Stage-3: number of mappers: 1; number of reducers: 1
+2016-10-09 16:43:06,451 Stage-3 map = 0%,  reduce = 0%
+2016-10-09 16:43:11,757 Stage-3 map = 100%,  reduce = 0%, Cumulative CPU 1.5 sec
+2016-10-09 16:43:19,134 Stage-3 map = 100%,  reduce = 100%, Cumulative CPU 3.34 sec
+MapReduce Total cumulative CPU time: 3 seconds 340 msec
+Ended Job = job_1475607266406_0238
+MapReduce Jobs Launched: 
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 7.14 sec   HDFS Read: 56105433 HDFS Write: 1648 SUCCESS
+Stage-Stage-3: Map: 1  Reduce: 1   Cumulative CPU: 3.34 sec   HDFS Read: 6131 HDFS Write: 1116 SUCCESS
+Total MapReduce CPU Time Spent: 10 seconds 480 msec
+OK
+DC	100.98529411764706
+MD	100.37987987987988
+DE	99.98744769874477
+NY	96.80901713255184
+NJ	96.39256535947712
+NV	96.01920768307323
+NH	95.55102040816327
+VI	95.45833333333333
+CA	95.29843735020611
+CT	95.15523809523809
+MA	94.56875
+HI	93.627539503386
+FL	93.51568785197104
+RI	93.49264705882354
+ME	93.06120092378752
+AZ	93.0152109911678
+VA	92.74397925157466
+NC	92.74228944246738
+VT	92.29351535836177
+PA	92.03229483282675
+PR	92.00380228136882
+NM	91.98916576381365
+AK	91.9593220338983
+SC	91.87679671457906
+IL	91.53400605449042
+GA	91.37450759707372
+WA	91.08142857142857
+TX	90.76061647632775
+OH	90.67919851270399
+OR	90.44067796610169
+MO	90.24824528998892
+CO	90.19719953325554
+MI	90.16129920176164
+ID	89.99267399267399
+WV	89.68006843455946
+LA	89.54445750097923
+MT	89.2890365448505
+IN	89.2554657082959
+NE	88.87924151696606
+KY	88.44244288224957
+WI	88.3327731092437
+AL	88.24153592072668
+TN	87.98872305140962
+AR	87.59672337744172
+SD	87.19469026548673
+IA	87.18125
+UT	87.11685823754789
+WY	86.24700239808153
+MN	86.06470588235294
+OK	84.89770264412657
+ND	84.6221590909091
+MS	84.23081201334817
+KS	83.89928909952607
+GU	79.88888888888889
+AS	NULL
+Time taken: 54.205 seconds, Fetched: 55 row(s)
+hive> 

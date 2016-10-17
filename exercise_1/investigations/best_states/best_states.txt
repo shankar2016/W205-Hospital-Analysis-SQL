@@ -1,0 +1,19 @@
+2). Which states are models of high tech care?
+
+Building on the theme of looking at effective care in each state, the hospitals and effective care 
+data provide the best measure of the quality of care in a state. While surveys can decide such 
+a distinction, surveys tend to be incomplete and do not cover critcal aspects. Hence, surveys are 
+NOT chosen to determine the best state. 
+
+Based on the selected criteria, the following states are rated the best for medical care. 
+Their corresponding scores are also presented.
+DC	100.98529411764706
+MD	100.37987987987988
+DE	99.98744769874477
+NY	96.80901713255184
+NJ	96.39256535947712
+NV	96.01920768307323
+NH	95.55102040816327
+VI	95.45833333333333
+CA	95.29843735020611
+CT	95.15523809523809

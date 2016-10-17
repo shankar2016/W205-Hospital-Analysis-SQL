@@ -1,0 +1,597 @@
+    > 
+    > 
+    > show tables
+    > ;
+OK
+measures_parquet
+measures_schema
+Time taken: 0.008 seconds, Fetched: 2 row(s)
+hive> DROP TABLE IF EXISTS measures_parquet;
+OK
+Time taken: 0.079 seconds
+hive> DROP TABLE IF EXISTS measures_schema;
+OK
+Time taken: 0.06 seconds
+hive> show tables
+    > ;
+OK
+Time taken: 0.008 seconds
+hive> DROP TABLE IF EXISTS hospitals_schema;
+OK
+Time taken: 0.007 seconds
+hive> 
+    > DROP TABLE IF EXISTS hospitals_parquet;
+OK
+Time taken: 0.005 seconds
+hive> 
+    > CREATE EXTERNAL TABLE   hospitals_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Hospital_Type           string,
+    >                 Ownership               string,
+    >                 Emergency_Services      string
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\'
+    > )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/hospital';
+OK
+Time taken: 0.034 seconds
+hive> 
+    > CREATE TABLE hospitals_parquet AS SELECT * FROM hospitals_schema
+    > ;
+Query ID = w205_20161009161313_06191409-ea47-41eb-b8f1-628a6cce48d4
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0222, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0222/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0222
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:13:17,738 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:13:24,133 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.22 sec
+MapReduce Total cumulative CPU time: 2 seconds 220 msec
+Ended Job = job_1475607266406_0222
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-13-11_061_5580035960127032399-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/hospitals_parquet
+Table default.hospitals_parquet stats: [numFiles=1, numRows=4824, totalSize=715806, rawDataSize=710982]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.22 sec   HDFS Read: 831235 HDFS Write: 715893 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 220 msec
+OK
+Time taken: 15.271 seconds
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > show tables;
+OK
+hospitals_parquet
+hospitals_schema
+Time taken: 0.012 seconds, Fetched: 2 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > DROP TABLE IF EXISTS effective_care_schema;
+OK
+Time taken: 0.007 seconds
+hive> 
+    > DROP TABLE IF EXISTS effective_care_parquet;
+OK
+Time taken: 0.005 seconds
+hive> 
+    > CREATE EXTERNAL TABLE effective_care_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Condition               string,
+    >                 Measure_ID              string,
+    >                 Measure_Name            string,
+    >                 Score                   int,
+    >                 Sample                  int,
+    >                 Footnote                string,
+    >                 Measure_Start_Date      date,
+    >                 Measure_End_Date        date
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\'
+    > )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/effective_care';
+OK
+Time taken: 0.031 seconds
+hive> 
+    > CREATE TABLE effective_care_parquet AS SELECT * FROM effective_care_schema;
+Query ID = w205_20161009161313_1dea19f1-4bc9-4099-84f8-398dd94cc26a
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0223, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0223/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0223
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:13:52,998 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:14:03,550 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 7.12 sec
+MapReduce Total cumulative CPU time: 7 seconds 120 msec
+Ended Job = job_1475607266406_0223
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-13-45_268_992875953305475163-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/effective_care_parquet
+Table default.effective_care_parquet stats: [numFiles=1, numRows=217821, totalSize=56092676, rawDataSize=55874855]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 7.12 sec   HDFS Read: 63286117 HDFS Write: 56092772 SUCCESS
+Total MapReduce CPU Time Spent: 7 seconds 120 msec
+OK
+Time taken: 19.441 seconds
+hive> 
+    > 
+    > show tables;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+Time taken: 0.008 seconds, Fetched: 4 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > 
+    > 
+    > DROP TABLE IF EXISTS readmissions_schema;
+OK
+Time taken: 0.007 seconds
+hive> 
+    > DROP TABLE IF EXISTS readmissions_parquet;
+OK
+Time taken: 0.005 seconds
+hive> 
+    > CREATE EXTERNAL TABLE readmissions_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Measure_ID              string,
+    >                 Measure_Name            string,
+    >                 Compared_to_National    string,
+    >                 Denominator             string,
+    >                 Score                   int,
+    >                 Lower_Estimate          int,
+    >                 Higher_Estimate         int,
+    >                 Footnote                string,
+    >                 Measure_Start_Date      date,
+    >                 Measure_End_Date        date
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\' )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/readmissions';
+OK
+Time taken: 0.039 seconds
+hive> 
+    > CREATE TABLE readmissions_parquet AS SELECT * FROM readmissions_schema;
+Query ID = w205_20161009161414_c499df57-e170-4991-9862-c54af8f4bd3d
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0224, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0224/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0224
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:14:19,864 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:14:29,337 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.26 sec
+MapReduce Total cumulative CPU time: 4 seconds 260 msec
+Ended Job = job_1475607266406_0224
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-14-12_942_4310262717081601192-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/readmissions_parquet
+Table default.readmissions_parquet stats: [numFiles=1, numRows=66990, totalSize=17457515, rawDataSize=17390525]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.26 sec   HDFS Read: 19941994 HDFS Write: 17457608 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 260 msec
+OK
+Time taken: 17.575 seconds
+hive> 
+    > 
+    > 
+    > show tables
+    > ;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+readmissions_parquet
+readmissions_schema
+Time taken: 0.01 seconds, Fetched: 6 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > DROP TABLE IF EXISTS readmissions_schema;
+OK
+Time taken: 0.065 seconds
+hive> 
+    > DROP TABLE IF EXISTS readmissions_parquet;
+OK
+Time taken: 0.078 seconds
+hive> 
+    > CREATE EXTERNAL TABLE readmissions_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Measure_ID              string,
+    >                 Measure_Name            string,
+    >                 Compared_to_National    string,
+    >                 Denominator             string,
+    >                 Score                   int,
+    >                 Lower_Estimate          int,
+    >                 Higher_Estimate         int,
+    >                 Footnote                string,
+    >                 Measure_Start_Date      date,
+    >                 Measure_End_Date        date
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\' )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/readmissions';
+OK
+Time taken: 0.04 seconds
+hive> 
+    > CREATE TABLE readmissions_parquet AS SELECT * FROM readmissions_schema;
+Query ID = w205_20161009161414_ff18fbe7-0af5-4132-8786-9ee532950c13
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0225, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0225/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0225
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:14:50,603 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:14:59,069 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.3 sec
+MapReduce Total cumulative CPU time: 4 seconds 300 msec
+Ended Job = job_1475607266406_0225
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-14-42_913_413470245647292384-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/readmissions_parquet
+Table default.readmissions_parquet stats: [numFiles=1, numRows=66990, totalSize=17457515, rawDataSize=17390525]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.3 sec   HDFS Read: 19941992 HDFS Write: 17457608 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 300 msec
+OK
+Time taken: 17.327 seconds
+hive> 
+    > 
+    > 
+    > show tables
+    > ;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+readmissions_parquet
+readmissions_schema
+Time taken: 0.011 seconds, Fetched: 6 row(s)
+hive> 
+    > 
+    > 
+    > 
+    > DROP TABLE IF EXISTS readmissions_schema;
+OK
+Time taken: 0.066 seconds
+hive> 
+    > DROP TABLE IF EXISTS readmissions_parquet;
+OK
+Time taken: 0.066 seconds
+hive> 
+    > CREATE EXTERNAL TABLE readmissions_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Measure_ID              string,
+    >                 Measure_Name            string,
+    >                 Compared_to_National    string,
+    >                 Denominator             string,
+    >                 Score                   int,
+    >                 Lower_Estimate          int,
+    >                 Higher_Estimate         int,
+    >                 Footnote                string,
+    >                 Measure_Start_Date      date,
+    >                 Measure_End_Date        date
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\' )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/readmissions';
+OK
+Time taken: 0.029 seconds
+hive> 
+    > ;
+hive> DROP TABLE IF EXISTS surveys_responses_schema;
+OK
+Time taken: 0.006 seconds
+hive> 
+    > DROP TABLE IF EXISTS surveys_responses_parquet;
+OK
+Time taken: 0.006 seconds
+hive> 
+    > CREATE EXTERNAL TABLE surveys_responses_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Metric1                 string,
+    >                 Metric2                 string,
+    >                 Metric3                 string,
+    >                 Metric4                 string,
+    >                 Metric5                 string,
+    >                 Metric6                 string,
+    >                 Metric7                 string,
+    >                 Metric8                 string,
+    >                 Metric9                 string,
+    >                 Metric10                string,
+    >                 Metric11                string,
+    >                 Metric12                string,
+    >                 Metric13                string,
+    >                 Metric14                string,
+    >                 Metric15                string,
+    >                 Metric16                string,
+    >                 Metric17                string,
+    >                 Metric18                string,
+    >                 Metric19                string,
+    >                 Metric20                string,
+    >                 Metric21                string,
+    >                 Metric22                string,
+    >                 Metric23                string,
+    >                 Metric24                string,
+    >                 HCAHPS_Base_Score       INT,
+    >                 HCAHPS_Consistency_Score INT
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\'
+    > )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/surveys_responses';
+OK
+Time taken: 0.038 seconds
+hive> 
+    > 
+    > CREATE TABLE surveys_responses_parquet AS SELECT * FROM surveys_responses_schema;
+Query ID = w205_20161009161616_1f5a3443-7a15-4d4a-911c-af49b69dd5dc
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0226, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0226/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0226
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:16:31,141 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:16:38,503 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.37 sec
+MapReduce Total cumulative CPU time: 2 seconds 370 msec
+Ended Job = job_1475607266406_0226
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-16-24_203_3667099237666294315-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/surveys_responses_parquet
+Table default.surveys_responses_parquet stats: [numFiles=1, numRows=3074, totalSize=1142541, rawDataSize=1139467]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.37 sec   HDFS Read: 1356643 HDFS Write: 1142637 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 370 msec
+OK
+Time taken: 15.5 seconds
+hive> 
+    > 
+    > show tables
+    > 
+    > ;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+readmissions_schema
+surveys_responses_parquet
+surveys_responses_schema
+Time taken: 0.008 seconds, Fetched: 7 row(s)
+hive> DROP TABLE IF EXISTS measures_schema;
+OK
+Time taken: 0.006 seconds
+hive> 
+    > DROP TABLE IF EXISTS measures_parquet;
+OK
+Time taken: 0.005 seconds
+hive> 
+    > CREATE EXTERNAL TABLE measures_schema(
+    >                 Measure_Name            string,
+    >                 Measure_ID              string,
+    >                 Measure_Start_Quarter   string,
+    >                 Measure_Start_Date      timestamp,
+    >                 Measure_End_Quarter     string,
+    >                 Measure_End_Date        timestamp
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\'
+    > )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/measure';
+OK
+Time taken: 0.023 seconds
+hive> 
+    > CREATE TABLE measures_parquet AS SELECT * FROM measures_schema;
+Query ID = w205_20161009161717_26d37faf-a1e0-4386-bfa6-73d3888311b4
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0227, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0227/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0227
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:17:54,072 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:17:59,519 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.61 sec
+MapReduce Total cumulative CPU time: 1 seconds 610 msec
+Ended Job = job_1475607266406_0227
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-17-46_410_7473823541906032992-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/measures_parquet
+Table default.measures_parquet stats: [numFiles=1, numRows=100, totalSize=11846, rawDataSize=11746]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 1.61 sec   HDFS Read: 17098 HDFS Write: 11930 SUCCESS
+Total MapReduce CPU Time Spent: 1 seconds 610 msec
+OK
+Time taken: 15.33 seconds
+hive> 
+    > 
+    > 
+    > show tables;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+measures_parquet
+measures_schema
+readmissions_schema
+surveys_responses_parquet
+surveys_responses_schema
+Time taken: 0.008 seconds, Fetched: 9 row(s)
+hive> 
+    > 
+    > DROP TABLE IF EXISTS readmissions_schema;
+OK
+Time taken: 0.065 seconds
+hive> 
+    > DROP TABLE IF EXISTS readmissions_parquet;
+OK
+Time taken: 0.006 seconds
+hive> 
+    > CREATE EXTERNAL TABLE readmissions_schema(
+    >                 Provider_ID             string,
+    >                 Name                    string,
+    >                 Address                 string,
+    >                 City                    string,
+    >                 State                   string,
+    >                 ZIP_CODE                string,
+    >                 County                  string,
+    >                 Phone_Number            string,
+    >                 Measure_ID              string,
+    >                 Measure_Name            string,
+    >                 Compared_to_National    string,
+    >                 Denominator             string,
+    >                 Score                   int,
+    >                 Lower_Estimate          int,
+    >                 Higher_Estimate         int,
+    >                 Footnote                string,
+    >                 Measure_Start_Date      date,
+    >                 Measure_End_Date        date
+    > )
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    > WITH SERDEPROPERTIES(
+    >                 "separatorChar" = ',',
+    >                 "quoteChar" = '"',
+    >                 "escapeChar" = '\\' )
+    > STORED AS TEXTFILE
+    > LOCATION '/user/w205/hospital_compare/readmissions';
+OK
+Time taken: 0.03 seconds
+hive> 
+    > CREATE TABLE readmissions_parquet AS SELECT * FROM readmissions_schema;
+Query ID = w205_20161009161818_26aec580-b680-4d62-afcb-7bf954e6a1f7
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0228, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0228/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0228
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 16:19:07,730 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 16:19:16,149 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.07 sec
+MapReduce Total cumulative CPU time: 4 seconds 70 msec
+Ended Job = job_1475607266406_0228
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_16-18-59_920_4139724462835127558-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/readmissions_parquet
+Table default.readmissions_parquet stats: [numFiles=1, numRows=66990, totalSize=17457515, rawDataSize=17390525]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.07 sec   HDFS Read: 19941994 HDFS Write: 17457608 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 70 msec
+OK
+Time taken: 17.392 seconds
+hive> show tables
+    > ;
+OK
+effective_care_parquet
+effective_care_schema
+hospitals_parquet
+hospitals_schema
+measures_parquet
+measures_schema
+readmissions_parquet
+readmissions_schema
+surveys_responses_parquet
+surveys_responses_schema
+Time taken: 0.008 seconds, Fetched: 10 row(s)
+hive> 
+
+

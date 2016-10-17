@@ -1,0 +1,189 @@
+[w205@ip-172-31-6-204 ~]$ hive -f hive_base_ddl.sql
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+
+Logging initialized using configuration in jar:file:/usr/lib/hive/lib/hive-common-1.1.0-cdh5.4.5.jar!/hive-log4j.properties
+OK
+Time taken: 0.502 seconds
+OK
+Time taken: 0.01 seconds
+OK
+Time taken: 0.009 seconds
+OK
+Time taken: 0.009 seconds
+OK
+Time taken: 0.012 seconds
+OK
+Time taken: 0.011 seconds
+OK
+Time taken: 0.008 seconds
+OK
+Time taken: 0.01 seconds
+OK
+Time taken: 0.008 seconds
+OK
+Time taken: 0.011 seconds
+OK
+Time taken: 0.015 seconds
+OK
+Time taken: 0.01 seconds
+OK
+Time taken: 0.511 seconds
+OK
+Time taken: 0.117 seconds
+OK
+Time taken: 0.101 seconds
+OK
+Time taken: 0.092 seconds
+OK
+Time taken: 0.142 seconds
+OK
+Time taken: 0.107 seconds
+OK
+Time taken: 0.128 seconds
+OK
+Time taken: 0.104 seconds
+OK
+Time taken: 0.082 seconds
+OK
+Time taken: 0.124 seconds
+OK
+Time taken: 0.008 seconds
+OK
+Time taken: 0.216 seconds
+OK
+Time taken: 0.008 seconds
+OK
+Time taken: 0.05 seconds
+OK
+Time taken: 0.012 seconds
+OK
+Time taken: 0.043 seconds
+OK
+Time taken: 0.007 seconds
+OK
+Time taken: 0.03 seconds
+OK
+Time taken: 0.007 seconds
+OK
+Time taken: 0.076 seconds
+Query ID = w205_20161009154343_afa18620-f4cb-403a-b082-607248584521
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0212, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0212/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0212
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 15:43:09,718 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 15:43:16,208 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.35 sec
+MapReduce Total cumulative CPU time: 2 seconds 350 msec
+Ended Job = job_1475607266406_0212
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_15-43-00_435_4279520700216966321-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/hospitals_parquet
+Table default.hospitals_parquet stats: [numFiles=1, numRows=4824, totalSize=715806, rawDataSize=710982]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.35 sec   HDFS Read: 831223 HDFS Write: 715893 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 350 msec
+OK
+Time taken: 18.137 seconds
+Query ID = w205_20161009154343_02cd752c-f3e5-4cf7-be3d-a662cc12c6d2
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0213, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0213/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0213
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 15:43:25,521 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 15:43:36,132 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 7.05 sec
+MapReduce Total cumulative CPU time: 7 seconds 50 msec
+Ended Job = job_1475607266406_0213
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_15-43-18_576_5622718251417369390-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/effective_care_parquet
+Table default.effective_care_parquet stats: [numFiles=1, numRows=217821, totalSize=56092676, rawDataSize=55874855]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 7.05 sec   HDFS Read: 63286129 HDFS Write: 56092772 SUCCESS
+Total MapReduce CPU Time Spent: 7 seconds 50 msec
+OK
+Time taken: 18.77 seconds
+Query ID = w205_20161009154343_e75853b2-eb6f-4441-8c1f-61d309582c5e
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0214, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0214/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0214
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 15:43:45,096 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 15:43:53,783 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.53 sec
+MapReduce Total cumulative CPU time: 4 seconds 530 msec
+Ended Job = job_1475607266406_0214
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_15-43-37_349_9050960291399619885-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/readmissions_parquet
+Table default.readmissions_parquet stats: [numFiles=1, numRows=66990, totalSize=17457515, rawDataSize=17390525]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.53 sec   HDFS Read: 19942004 HDFS Write: 17457608 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 530 msec
+OK
+Time taken: 17.686 seconds
+Query ID = w205_20161009154343_3edd0917-01d7-45e9-b41d-893ed5b20184
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0215, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0215/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0215
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 15:44:01,999 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 15:44:08,404 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.59 sec
+MapReduce Total cumulative CPU time: 1 seconds 590 msec
+Ended Job = job_1475607266406_0215
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_15-43-55_038_7405339663031608058-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/measures_parquet
+Table default.measures_parquet stats: [numFiles=1, numRows=100, totalSize=11846, rawDataSize=11746]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 1.59 sec   HDFS Read: 17108 HDFS Write: 11930 SUCCESS
+Total MapReduce CPU Time Spent: 1 seconds 590 msec
+OK
+Time taken: 14.531 seconds
+Query ID = w205_20161009154444_54f73882-1c75-41b3-86e9-b27e4a70c780
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1475607266406_0216, Tracking URL = http://ip-172-31-6-204.ec2.internal:8088/proxy/application_1475607266406_0216/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1475607266406_0216
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2016-10-09 15:44:17,331 Stage-1 map = 0%,  reduce = 0%
+2016-10-09 15:44:23,710 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.38 sec
+MapReduce Total cumulative CPU time: 2 seconds 380 msec
+Ended Job = job_1475607266406_0216
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/.hive-staging_hive_2016-10-09_15-44-09_572_5760071771617992514-1/-ext-10001
+Moving data to: hdfs://localhost:8020/user/hive/warehouse/surveys_responses_parquet
+Table default.surveys_responses_parquet stats: [numFiles=1, numRows=3074, totalSize=1142541, rawDataSize=1139467]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.38 sec   HDFS Read: 1356653 HDFS Write: 1142637 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 380 msec
+OK
+Time taken: 16.388 seconds
+[w205@ip-172-31-6-204 ~]$ 
+
